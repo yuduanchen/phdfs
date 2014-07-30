@@ -18,7 +18,7 @@ yuduan chen(lead)
 
 ##Hadoop installation
 
-hadoop docs: http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html
+hadoop docs: http://hadoop.apache.org/docs/r1.0.4/cn/quickstart.html
 
 ## hadoop Local environment configuration
 vim /etc/profile
