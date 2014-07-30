@@ -1,0 +1,8 @@
+// $ Id: $
+// vim:ft=javascript
+
+ARG_ENABLE('phdfs' , 'phdfs', 'no');
+if (PHP_PHDFS == "yes") {
+  EXTENSION("phdfs", "phdfs.c");
+  AC_DEFINE("HAVE_PHDFS", 1, "phdfs support");
+}
