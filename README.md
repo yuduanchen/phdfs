@@ -9,10 +9,10 @@ yuduan chen(lead)
 
 ## Install
 
-## Release
+## Requirements
 
-PHP Version: PHP 5.3+
-ZTS Enabled ( Thread Safety )
+* PHP Version: PHP 5.3+
+* ZTS Enabled ( Thread Safety )
 
 
 
