@@ -64,7 +64,7 @@ source /etc/profile
 ```
 
 
-include ld.so.conf.d/*.conf
+vim /etc/ld.so.conf
 
 32-bit system
 ```
