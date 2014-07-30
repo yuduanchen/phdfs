@@ -12,6 +12,7 @@ yuduan chen(lead)
 ## Release
 
 PHP Version: PHP 5.3+
+ZTS Enabled ( Thread Safety )
 
 
 
