@@ -186,6 +186,7 @@ class phdfs {
         //appden file
         $log =  $obj->write("/a/b/c/test2.txt","test",O_WRONLY|O_APPEND); 
         var_dump($log);
+        echo $obj->rename("/a/b/c/test2.txt","/a/b/c/test3.txt");
     }catch (Exception $ex) {
         echo $ex->getMessage();
     }   
