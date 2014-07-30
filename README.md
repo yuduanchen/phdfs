@@ -13,7 +13,7 @@ yuduan chen(lead)
 
 * PHP Version: PHP 5.3+
 * ZTS Enabled ( Thread Safety )
-
+* Installing Hadoop AND JAVA
 
 
 ##Hadoop installation
