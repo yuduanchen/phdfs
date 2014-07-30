@@ -4,7 +4,7 @@
 phdfs - PHP extensions, using PHP to manipulate Hadoop HDFS filesystem
 
 ###Maintainers
-yuduan chen(lead)
+yuduanchen
 
 
 ## Install
