@@ -181,7 +181,10 @@ class phdfs {
         $obj->port = "9000";
         $obj->ip = "127.0.0.1";
         $obj->connect();
-        $log =  $obj->write("/a/b/c/test.txt","test",O_WRONLY|O_APPEND); 
+        //create file
+        $log =  $obj->write("/a/b/c/test1.txt","test",O_WRONLY|O_CREAT); 
+        //appden file
+        $log =  $obj->write("/a/b/c/test2.txt","test",O_WRONLY|O_APPEND); 
         var_dump($log);
     }catch (Exception $ex) {
         echo $ex->getMessage();
