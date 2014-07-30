@@ -182,7 +182,7 @@ class phdfs {
         $obj->ip = "127.0.0.1";
         $obj->connect();
         $log =  $obj->write("/a/b/c/test.txt","test",O_WRONLY|O_APPEND); 
-	var_dump($log);
+        var_dump($log);
     }catch (Exception $ex) {
         echo $ex->getMessage();
     }   
