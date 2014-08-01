@@ -123,7 +123,7 @@ class phdfs {
      * int mode: O_WRONLY 、O_CREAT、O_APPEND 
      * Returns true on success, false on error.
      */
-    public function write(string $file,string buffer [, int mode ]);
+    public function write(string $file,string buffer [, int $mode ]);
      /***
      * Read data from an open file.
      * $buffer_len default 1024k 
@@ -155,7 +155,7 @@ class phdfs {
      * Get the current offset in the file, in bytes.
      * Returns Current offset,  false on error.
      */
-    public function tell();
+    public function tell(string $file  [, int $buffer_len ]);
     /***
      * Copy file 
      * Returns true on success, false on error.
@@ -165,7 +165,7 @@ class phdfs {
      * Delete file
      * Returns true on success, false on error.
      */
-    public function delete($string $path);
+    public function delete($string $file);
 
 }
 
