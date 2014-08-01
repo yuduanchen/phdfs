@@ -165,7 +165,7 @@ class phdfs {
      * Delete file
      * Returns true on success, false on error.
      */
-    public function delete();
+    public function delete($string $path);
 
 }
 
