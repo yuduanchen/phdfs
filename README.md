@@ -140,7 +140,7 @@ class phdfs {
      * make the given file and all non-existent parents into directories.
      * Returns true on success, false on error.
      */
-    public function create_directory();
+    public function create_directory(string $path);
      /***
      * Rename file.
      * Returns true on success, false on error.

@@ -117,10 +117,10 @@ PHP_METHOD(phdfs, disconnect) {
 PHP_METHOD(phdfs, exists) {
     zend_class_entry * _this_ce;
     zval * _this_zval = NULL;
-    const char * filename = NULL;
-    int filename_len = 0; 
+    const char * path = NULL;
+    int path_len = 0; 
     int state;
-    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &filename, &filename_len) == FAILURE) {
+    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &path, &path_len) == FAILURE) {
         return;
     }
     if (!php_hdfs_hanele.fs) {
@@ -128,7 +128,7 @@ PHP_METHOD(phdfs, exists) {
         ZVAL_FALSE(return_value);
         return;
     }
-    state = phdfs_hadoop_hdfs_exists(php_hdfs_hanele.fs,filename);
+    state = phdfs_hadoop_hdfs_exists(php_hdfs_hanele.fs,path);
     if (state==0) {
         ZVAL_TRUE(return_value);
         return;
@@ -144,10 +144,10 @@ PHP_METHOD(phdfs, exists) {
 PHP_METHOD(phdfs, create_directory) {
     zend_class_entry * _this_ce;
     zval * _this_zval = NULL;
-    const char * filename = NULL;
-    int filename_len = 0; 
+    const char * path = NULL;
+    int path_len = 0; 
     int state;
-    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &filename, &filename_len) == FAILURE) {
+    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &path, &path_len) == FAILURE) {
         return;
     }
     if (!php_hdfs_hanele.fs) {
@@ -155,7 +155,7 @@ PHP_METHOD(phdfs, create_directory) {
         ZVAL_FALSE(return_value);
         return;
     } 
-    state = phdfs_hadoop_hdfs_create_directory(php_hdfs_hanele.fs, filename);
+    state = phdfs_hadoop_hdfs_create_directory(php_hdfs_hanele.fs, path);
     if (state==0) {
         ZVAL_TRUE(return_value);
         return;
