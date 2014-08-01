@@ -129,7 +129,7 @@ class phdfs {
      * $buffer_len default 1024k 
      * Returns true on success, false on error.
      */
-    public function read(string $file[int $buffer_len]);
+    public function read(string $file[,int $buffer_len]);
      /***
      * Get information about a path  
      * Returns array on success, false on error.
