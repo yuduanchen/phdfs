@@ -1,7 +1,7 @@
 
 ###Summary
 
-phdfs - PHP extensions, using PHP to manipulate Hadoop HDFS filesystem
+phdfs - PHP extensions, using PHP to manipulate Hadoop HDFS
 
 ###Maintainers
 yuduanchen
@@ -13,7 +13,7 @@ yuduanchen
 
 * PHP Version: PHP 5.3+
 * ZTS Enabled ( Thread Safety )
-* Installing Hadoop  
+* Installing Hadoop
 
 
 ##Hadoop installation
@@ -104,34 +104,34 @@ class phdfs {
     public $port = "9000";//hadoop port /
 
     /***
-     * Connect to a hdfs file system. Connect to the hdfs. 
+     * Connect to a hdfs file system. Connect to the hdfs.
      * Returns true on success, false on error.
      */
     public function connect();
     /***
-     * Disconnect from the hdfs file system. Disconnect from hdfs. 
+     * Disconnect from the hdfs file system. Disconnect from hdfs.
      * Returns true on success, false on error.
      */
     public function disconnect();
     /***
-     * Checks if a given path exsits on the filesystem 
+     * Checks if a given path exsits on the filesystem
      * Returns true on success, false on error.
      */
     public function exists(string $path);
      /***
      * Write data into an open file.
-     * int mode: O_WRONLY 、O_CREAT、O_APPEND 
+     * int mode: O_WRONLY 、O_CREAT、O_APPEND
      * Returns true on success, false on error.
      */
     public function write(string $file,string buffer [, int $mode ]);
      /***
      * Read data from an open file.
-     * $buffer_len default 1024k 
+     * $buffer_len default 1024k
      * Returns true on success, false on error.
      */
     public function read(string $file[,int $buffer_len]);
      /***
-     * Get information about a path  
+     * Get information about a path
      * Returns array on success, false on error.
      */
     public function file_info(string $path);
@@ -157,7 +157,7 @@ class phdfs {
      */
     public function tell(string $file  [, int $buffer_len ]);
     /***
-     * Copy file 
+     * Copy file
      * Returns true on success, false on error.
      */
     public function copy(string $source_file,string $destination_file);
@@ -182,17 +182,17 @@ class phdfs {
         $obj->ip = "127.0.0.1";
         $obj->connect();
         //create file
-        $log =  $obj->write("/a/b/c/test1.txt","test",O_WRONLY|O_CREAT); 
+        $log =  $obj->write("/a/b/c/test1.txt","test",O_WRONLY|O_CREAT);
         //appden file
-        $log =  $obj->write("/a/b/c/test2.txt","test",O_WRONLY|O_APPEND); 
+        $log =  $obj->write("/a/b/c/test2.txt","test",O_WRONLY|O_APPEND);
         var_dump($log);
         echo $obj->rename("/a/b/c/test2.txt","/a/b/c/test3.txt");
     }catch (Exception $ex) {
         echo $ex->getMessage();
-    }   
+    }
 ?>
 ```
- 
+
 
 
 ### more
