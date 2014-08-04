@@ -1,7 +1,7 @@
 
 ###Summary
 
-phdfs - PHP extensions, using PHP to manipulate Hadoop HDFS
+phdfs - PHP extensions, using PHP to manipulate Hadoop HDFS,Extension is an interface to HDFS
 
 ###Maintainers
 yuduanchen
