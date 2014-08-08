@@ -54,7 +54,7 @@ extern "C" {
 #include <php.h>
 
 #ifdef HAVE_PHDFS
-#define PHP_PHDFS_VERSION "1.0"
+#define PHP_PHDFS_VERSION "0.1.0"
 
 
 #include <php_ini.h>
