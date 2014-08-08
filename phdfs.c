@@ -23,9 +23,6 @@
 /* {{{ Class definitions */
 
 static zend_class_entry * phdfs_ce_ptr = NULL; 
-struct _php_hdfs_hanele {
-    phdfs_hadoop_hdfs fs;
-} php_hdfs_hanele;
 /* {{{ Methods */
 
 /* {{{ proto boolean connect()
@@ -46,8 +43,8 @@ PHP_METHOD(phdfs, connect) {
      * To obtain hadhoop  port
      */
     hdfs_port = zend_read_property(_this_ce, getThis(), "port", strlen("port"), 0 TSRMLS_CC); 
-    php_hdfs_hanele.fs  = phdfs_hadoop_hdfs_connect(Z_STRLEN_P(hdfs_ip) ? Z_STRVAL_P(hdfs_ip) : 0, atoi(Z_STRLEN_P(hdfs_port) ? Z_STRVAL_P(hdfs_port) : 0));
-    if (!php_hdfs_hanele.fs) {
+    PHDFS_G(fs) = phdfs_hadoop_hdfs_connect(Z_STRLEN_P(hdfs_ip) ? Z_STRVAL_P(hdfs_ip) : 0, atoi(Z_STRLEN_P(hdfs_port) ? Z_STRVAL_P(hdfs_port) : 0));
+    if (!PHDFS_G(fs)) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
         ZVAL_FALSE(return_value);
         return;
@@ -74,25 +71,25 @@ PHP_METHOD(phdfs, write) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oss|l", &_this_zval, _this_zval, &path, &path_len, &buffer, &buffer_len,&mode,&mode_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
         ZVAL_FALSE(return_value);
         return;
     }
     buffer_size = strtoul(buffer, NULL, 10);
-    hdfs_file = phdfs_hadoop_hdfs_open_file(php_hdfs_hanele.fs, path,mode,buffer_size, 0, 0);
+    hdfs_file = phdfs_hadoop_hdfs_open_file( PHDFS_G(fs), path,mode,buffer_size, 0, 0);
     if (!hdfs_file) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, "Failed to  hdfs file open ");
         ZVAL_FALSE(return_value);
         return;
     }
-    num_written_bytes = phdfs_hadoop_hdfs_write(php_hdfs_hanele.fs, hdfs_file, (void*) buffer, strlen(buffer) + 1);
-    if (phdfs_hadoop_hdfs_flush(php_hdfs_hanele.fs, hdfs_file)) {
+    num_written_bytes = phdfs_hadoop_hdfs_write( PHDFS_G(fs), hdfs_file, (void*) buffer, strlen(buffer) + 1);
+    if (phdfs_hadoop_hdfs_flush( PHDFS_G(fs), hdfs_file)) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs flush");
         ZVAL_FALSE(return_value);
         return;
     }
-    phdfs_hadoop_hdfs_close_file(php_hdfs_hanele.fs, hdfs_file);
+    phdfs_hadoop_hdfs_close_file( PHDFS_G(fs), hdfs_file);
     ZVAL_TRUE(return_value);
     return;
 }
@@ -102,7 +99,7 @@ PHP_METHOD(phdfs, write) {
 /* {{{ proto boolean disconnect()
  */
 PHP_METHOD(phdfs, disconnect) {
-    if(phdfs_hadoop_hdfs_disconnect(php_hdfs_hanele.fs)==0){
+    if(phdfs_hadoop_hdfs_disconnect( PHDFS_G(fs))==0){
         ZVAL_TRUE(return_value);
         return;  
     }else{
@@ -123,12 +120,12 @@ PHP_METHOD(phdfs, exists) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &path, &path_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
         ZVAL_FALSE(return_value);
         return;
     }
-    state = phdfs_hadoop_hdfs_exists(php_hdfs_hanele.fs,path);
+    state = phdfs_hadoop_hdfs_exists( PHDFS_G(fs),path);
     if (state==0) {
         ZVAL_TRUE(return_value);
         return;
@@ -150,12 +147,12 @@ PHP_METHOD(phdfs, create_directory) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &path, &path_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
         ZVAL_FALSE(return_value);
         return;
     } 
-    state = phdfs_hadoop_hdfs_create_directory(php_hdfs_hanele.fs, path);
+    state = phdfs_hadoop_hdfs_create_directory( PHDFS_G(fs), path);
     if (state==0) {
         ZVAL_TRUE(return_value);
         return;
@@ -176,12 +173,12 @@ PHP_METHOD(phdfs, delete) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &path, &path_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
         zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
         ZVAL_FALSE(return_value);
         return;
     }
-    state = phdfs_hadoop_hdfs_delete(php_hdfs_hanele.fs, path);
+    state = phdfs_hadoop_hdfs_delete( PHDFS_G(fs), path);
     if (state==0) {
         ZVAL_TRUE(return_value);
         return;
@@ -205,12 +202,12 @@ PHP_METHOD(phdfs, rename) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oss", &_this_zval, _this_zval, &old_path, &old_path_len,&new_path,&new_path_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
        zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
        ZVAL_FALSE(return_value);
        return;
     }
-    state = phdfs_hadoop_hdfs_rename(php_hdfs_hanele.fs, old_path,new_path);
+    state = phdfs_hadoop_hdfs_rename( PHDFS_G(fs), old_path,new_path);
     if (state==0) {
         ZVAL_TRUE(return_value);
         return; 
@@ -233,14 +230,14 @@ PHP_METHOD(phdfs, read) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os|l", &_this_zval, _this_zval, &path, &path_len,&read_length) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
        zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
        ZVAL_FALSE(return_value);
        return;
     }
-    hdfs_file = phdfs_hadoop_hdfs_open_file(php_hdfs_hanele.fs,path,O_RDONLY, read_length, 0, 0);
+    hdfs_file = phdfs_hadoop_hdfs_open_file( PHDFS_G(fs),path,O_RDONLY, read_length, 0, 0);
     buffer = emalloc(sizeof(char) * read_length); 
-    phdfs_hadoop_hdfs_read(php_hdfs_hanele.fs, hdfs_file, (void*)buffer,read_length);
+    phdfs_hadoop_hdfs_read( PHDFS_G(fs), hdfs_file, (void*)buffer,read_length);
     ZVAL_STRINGL(return_value,buffer,read_length, 1);
     efree(buffer);
     return;
@@ -259,12 +256,12 @@ PHP_METHOD(phdfs, file_info) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &_this_zval, _this_zval, &path, &path_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
        zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
        ZVAL_FALSE(return_value);
        return;
     }
-    if((hdfs_file_info = phdfs_hadoop_hdfs_get_path_info(php_hdfs_hanele.fs, path)) != NULL) { 
+    if((hdfs_file_info = phdfs_hadoop_hdfs_get_path_info( PHDFS_G(fs), path)) != NULL) { 
             array_init(return_value);
             add_assoc_string(return_value,"name",hdfs_file_info->mName, 1);
             add_assoc_double(return_value,"replication",hdfs_file_info->mReplication);
@@ -297,12 +294,12 @@ PHP_METHOD(phdfs, list_directory) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os|l", &_this_zval, _this_zval, &path, &path_len,&level) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
        zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
        ZVAL_FALSE(return_value);
        return;
     }
-    if((hdfs_file_info = phdfs_hadoop_hdfs_list_directory(php_hdfs_hanele.fs, path,&level)) != NULL) { 
+    if((hdfs_file_info = phdfs_hadoop_hdfs_list_directory( PHDFS_G(fs), path,&level)) != NULL) { 
         array_init(return_value);
         for(i=0; i < level; ++i) {
                 MAKE_STD_ZVAL(subarray);
@@ -340,13 +337,13 @@ PHP_METHOD(phdfs,tell) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os|l", &_this_zval, _this_zval, &path, &path_len,&read_length) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
        zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
        ZVAL_FALSE(return_value);
        return;
     }
-    hdfs_file = phdfs_hadoop_hdfs_open_file(php_hdfs_hanele.fs,path,O_RDONLY, read_length, 0, 0);
-    if((current_pos = phdfs_hadoop_hdfs_tell(php_hdfs_hanele.fs,hdfs_file)) != seek_pos) { 
+    hdfs_file = phdfs_hadoop_hdfs_open_file( PHDFS_G(fs),path,O_RDONLY, read_length, 0, 0);
+    if((current_pos = phdfs_hadoop_hdfs_tell( PHDFS_G(fs),hdfs_file)) != seek_pos) { 
        ZVAL_LONG(return_value,current_pos);
        return;
     }
@@ -368,12 +365,12 @@ PHP_METHOD(phdfs,copy) {
     if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oss", &_this_zval, _this_zval, &source_file, &source_file_len,&destination_file,&destination_file_len) == FAILURE) {
         return;
     }
-    if (!php_hdfs_hanele.fs) {
+    if (! PHDFS_G(fs)) {
        zend_throw_exception_ex(_this_ce, 12 TSRMLS_CC, " Failed to hdfs connection ");
        ZVAL_FALSE(return_value);
        return;
     } 
-    if(phdfs_hadoop_hdfs_copy(php_hdfs_hanele.fs,source_file,php_hdfs_hanele.fs, destination_file) == 0 ) { 
+    if(phdfs_hadoop_hdfs_copy( PHDFS_G(fs),source_file, PHDFS_G(fs), destination_file) == 0 ) { 
        ZVAL_TRUE(return_value);
        return;
     }
@@ -451,7 +448,7 @@ PHP_MSHUTDOWN_FUNCTION(phdfs) {
 /* }}} */
 
 /* {{{ PHP_RINIT_FUNCTION */
-PHP_RINIT_FUNCTION(phdfs) { 
+PHP_RINIT_FUNCTION(phdfs) {  
     return SUCCESS;
 }
 /* }}} */
