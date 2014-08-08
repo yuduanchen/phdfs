@@ -43,6 +43,7 @@
 #define phdfs_hadoop_hdfs                   hdfsFS
 
 
+
 #ifdef  __cplusplus
 extern "C" {
 #endif
@@ -101,6 +102,17 @@ PHP_MINFO_FUNCTION(phdfs);
 #define PROP_SET_STRING(name, s) zend_update_property_string(_this_ce, _this_zval, #name, strlen(#name), s TSRMLS_CC)
 #define PROP_SET_STRINGL(name, s, l) zend_update_property_stringl(_this_ce, _this_zval, #name, strlen(#name), s, l TSRMLS_CC)
 
+
+ZEND_BEGIN_MODULE_GLOBALS(phdfs)
+    phdfs_hadoop_hdfs fs;
+ZEND_END_MODULE_GLOBALS(phdfs)
+#ifdef ZTS
+#define PHDFS_G(v) TSRMG(phdfs_globals_id,zend_phdfs_globals *, v)
+#else
+#define PHDFS_G(v) (phdfs_globals.v)
+#endif
+ZEND_DECLARE_MODULE_GLOBALS(phdfs)
+        
 PHP_METHOD(phdfs, connect);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(phdfs__connect_args, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE,0)
