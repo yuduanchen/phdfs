@@ -42,8 +42,6 @@
 #define phdfs_hadoop_toffset                tOffset
 #define phdfs_hadoop_hdfs                   hdfsFS
 
-
-
 #ifdef  __cplusplus
 extern "C" {
 #endif
@@ -101,7 +99,6 @@ PHP_MINFO_FUNCTION(phdfs);
 #define PROP_GET_STRLEN(name)    Z_STRLEN_P(zend_read_property(_this_ce, _this_zval, #name, strlen(#name), 1 TSRMLS_CC))
 #define PROP_SET_STRING(name, s) zend_update_property_string(_this_ce, _this_zval, #name, strlen(#name), s TSRMLS_CC)
 #define PROP_SET_STRINGL(name, s, l) zend_update_property_stringl(_this_ce, _this_zval, #name, strlen(#name), s, l TSRMLS_CC)
-
 
 ZEND_BEGIN_MODULE_GLOBALS(phdfs)
     phdfs_hadoop_hdfs fs;
@@ -224,7 +221,6 @@ ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define phdfs__tell_args NULL
 #endif 
-        
 
 #ifdef  __cplusplus
 }
