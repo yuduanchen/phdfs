@@ -21,7 +21,6 @@
 
 #define phdfs_hadoop_tsize                  tSize
 #define phdfs_hadoop_hdfs_connect           hdfsConnect
-#define phdfs_hadoop_hdfs_connect           hdfsConnect
 #define phdfs_hadoop_hdfs_file              hdfsFile
 #define phdfs_hadoop_hdfs_open_file         hdfsOpenFile
 #define phdfs_hadoop_hdfs_write             hdfsWrite
@@ -85,6 +84,9 @@ PHP_RINIT_FUNCTION(phdfs);
 PHP_RSHUTDOWN_FUNCTION(phdfs);
 PHP_MINFO_FUNCTION(phdfs);
 
+PHP_METHOD(phdfs, __construct);                                      
+PHP_METHOD(phdfs, __destruct);
+
 #ifdef ZTS
 #include "TSRM.h"
 #endif
@@ -100,6 +102,15 @@ PHP_MINFO_FUNCTION(phdfs);
 #define PROP_SET_STRING(name, s) zend_update_property_string(_this_ce, _this_zval, #name, strlen(#name), s TSRMLS_CC)
 #define PROP_SET_STRINGL(name, s, l) zend_update_property_stringl(_this_ce, _this_zval, #name, strlen(#name), s, l TSRMLS_CC)
 
+PHP_METHOD(phdfs, __construct);
+PHP_METHOD(phdfs, __destruct);
+typedef struct _ze_phdfs_object {
+	 zend_object zo;
+	 phdfs_hadoop_hdfs ptr;
+     char *hdfs_host;
+     char *hdfs_port;
+} ze_phdfs_object;
+
 ZEND_BEGIN_MODULE_GLOBALS(phdfs)
     phdfs_hadoop_hdfs fs;
 ZEND_END_MODULE_GLOBALS(phdfs)
@@ -109,6 +120,16 @@ ZEND_END_MODULE_GLOBALS(phdfs)
 #define PHDFS_G(v) (phdfs_globals.v)
 #endif
 ZEND_DECLARE_MODULE_GLOBALS(phdfs)
+        
+PHP_METHOD(phdfs, __construct);
+#if (PHP_MAJOR_VERSION >= 5)
+ZEND_BEGIN_ARG_INFO(phdfs__construct_args,2)
+  ZEND_ARG_INFO(0,ip)
+  ZEND_ARG_INFO(0,port)
+ZEND_END_ARG_INFO()
+#else /* PHP 4.x */
+#define phdfs__construct_args NULL
+#endif
         
 PHP_METHOD(phdfs, connect);
 #if (PHP_MAJOR_VERSION >= 5)
@@ -220,6 +241,14 @@ ZEND_BEGIN_ARG_INFO_EX(phdfs__tell_args, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define phdfs__tell_args NULL
+#endif 
+
+PHP_METHOD(phdfs, __destruct);
+#if (PHP_MAJOR_VERSION >= 5)
+ZEND_BEGIN_ARG_INFO_EX(phdfs__destruct_args, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 0)
+ZEND_END_ARG_INFO()
+#else /* PHP 4.x */
+#define phdfs__destruct_args NULL
 #endif 
 
 #ifdef  __cplusplus
