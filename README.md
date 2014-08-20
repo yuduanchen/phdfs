@@ -100,14 +100,14 @@ $make && make install
 ```c
 class phdfs {
     /* variable */
-    public $ip= "127.0.0.1" ;//hadoop ip
+    public $host= "127.0.0.1" ;//hadoop ip
     public $port = "9000";//hadoop port /
 
     /***
      * Connect to a hdfs file system. Connect to the hdfs.
      * Returns true on success, false on error.
      */
-    public function connect();
+    public function connect(string $host,string $port);
     /***
      * Disconnect from the hdfs file system. Disconnect from hdfs.
      * Returns true on success, false on error.
@@ -177,9 +177,7 @@ class phdfs {
 
 <?php
     try {
-        $obj = new phdfs();
-        $obj->port = "9000";
-        $obj->ip = "127.0.0.1";
+        $obj = new phdfs("127.0.0.1","9000"); 
         $obj->connect();
         //create file
         $log =  $obj->write("/a/b/c/test1.txt","test",O_WRONLY|O_CREAT);
