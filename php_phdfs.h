@@ -105,10 +105,10 @@ PHP_METHOD(phdfs, __destruct);
 PHP_METHOD(phdfs, __construct);
 PHP_METHOD(phdfs, __destruct);
 typedef struct _ze_phdfs_object {
-	 zend_object zo;
-	 phdfs_hadoop_hdfs ptr;
-     char *hdfs_host;
-     char *hdfs_port;
+	zend_object zo;
+	phdfs_hadoop_hdfs ptr;
+	char *hdfs_host;
+	char *hdfs_port;
 } ze_phdfs_object;
 
 ZEND_BEGIN_MODULE_GLOBALS(phdfs)
