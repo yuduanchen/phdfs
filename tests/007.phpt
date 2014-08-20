@@ -6,9 +6,7 @@ Check for phdfs create_directory function
 <?php
 
 try {
-    $obj = new phdfs();
-    $obj->port = "9000";
-    $obj->ip = "127.0.0.1";
+    $obj = new phdfs("127.0.0.1","9000");
     $obj->connect();
     $log = $obj->create_directory('/a/b/c/');
 } catch (Exception $ex) {
