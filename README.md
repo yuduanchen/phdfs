@@ -102,12 +102,14 @@ class phdfs {
     /* variable */
     public $host= "127.0.0.1" ;//hadoop ip
     public $port = "9000";//hadoop port /
+    
+    public function __construct(string $host,string $port);
 
     /***
      * Connect to a hdfs file system. Connect to the hdfs.
      * Returns true on success, false on error.
      */
-    public function connect(string $host,string $port);
+    public function connect();
     /***
      * Disconnect from the hdfs file system. Disconnect from hdfs.
      * Returns true on success, false on error.
