@@ -12,7 +12,7 @@
   | obtain it through the world-wide-web, please send a note to          |
   | license@php.net so we can mail you a copy immediately.               |
   +----------------------------------------------------------------------+
-  | Authors: yuduan chen <thisduan@gmail.com>                                  |
+  | Authors: yuduan chen <yumin1985@php.net>                             |
   +----------------------------------------------------------------------+
 */ 
 
