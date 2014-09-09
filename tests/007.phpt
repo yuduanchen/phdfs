@@ -14,5 +14,4 @@ try {
 }
 ?>
 --EXPECT--
-Environment variable CLASSPATH not set!
-string(27) " Failed to hdfs connection "
+bool(true)
