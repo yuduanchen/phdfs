@@ -52,7 +52,7 @@ extern "C" {
 #include <php.h>
 
 #ifdef HAVE_PHDFS
-#define PHP_PHDFS_VERSION "0.1.1"
+#define PHP_PHDFS_VERSION "0.1.2"
 
 
 #include <php_ini.h>
