@@ -124,7 +124,7 @@ ZEND_DECLARE_MODULE_GLOBALS(phdfs)
 PHP_METHOD(phdfs, __construct);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO(phdfs__construct_args,2)
-  ZEND_ARG_INFO(0,ip)
+  ZEND_ARG_INFO(0,host)
   ZEND_ARG_INFO(0,port)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
