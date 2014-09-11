@@ -223,7 +223,8 @@ PHP_METHOD(phdfs, __construct) {
     zval * _this_zval = NULL;
     int hdfs_host_len = 0;
     int hdfs_port_len = 0;
-    char *hdfs_host,*hdfs_port,*id; 
+    char *hdfs_host,*hdfs_port;
+    zval *id; 
     id = getThis();
     ze_phdfs_object *intern; 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &hdfs_host,&hdfs_host_len,&hdfs_port,&hdfs_port_len) == FAILURE) {
