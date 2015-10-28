@@ -3,6 +3,9 @@
 
 phdfs - PHP extensions, using PHP to manipulate Hadoop HDFS,Extension is an interface to HDFS 
 
+[Package Information](https://pecl.php.net/package/phdfs)
+
+
 ## Documentation
 [English](https://github.com/yuduanchen/phdfs/wiki/phdfs)
 
